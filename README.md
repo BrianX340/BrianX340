@@ -25,6 +25,9 @@
 >* SQLite
 >* SQLAlchemy
 >
+>-Bases de datos no Relacionales
+>* MongoDB
+>
 >-Frameworks
 >* Flask
 >* Express
