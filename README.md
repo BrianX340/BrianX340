@@ -54,3 +54,5 @@ Tel :
 Email :
 * brianx340@gmail.com
 </p>
+
+[LinkedIn](https://www.linkedin.com/in/brianx340/)
