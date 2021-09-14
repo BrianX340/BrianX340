@@ -22,8 +22,7 @@
 >* Markdown
 >
 >-Bases de datos Relacionales
->* SQLite
->* SQLAlchemy
+>* MYSQL
 >
 >-Bases de datos no Relacionales
 >* MongoDB
@@ -39,6 +38,9 @@
 >* JupyterNotebook
 >
 >-Experiencia con:
+>* Diagramas de Flujo
+>* APIS
+>* MVC
 >* Unity
 >* Photoshop
 >* AfterEffects
