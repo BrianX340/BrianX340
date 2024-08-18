@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SquadBuster ChestTracker</title>
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css"
+    >
+</head>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        width: 100vw;
+        height: 100vh;
+    }
+
+    .whmax {
+        width: 100%;
+        height: 100%;
+    }
+
+    #app {
+        filter: blur(0px);
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        max-width: 500px;
+        background-image: url("./BG.jpg");
+        background-position: center;
+        background-size: cover;
+        overflow: hidden !important;
+        position: relative;
+    }
+
+    .column {
+        height: 100%;
+    }
+
+    .noShow {
+        display: none;
+    }
+
+    .inCofreActual {
+        text-align: center;
+        height: 80px;
+        font-size: 2rem;
+        font-weight: bold;
+    }
+
+    #rotacionImg {
+        width: 100%;
+        border-radius: 15px;
+        overflow: hidden;
+    }
+
+    #bg {
+        background-color: #00000054;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 0;
+    }
+
+    .actualCofreImage {
+        width: 150px;
+        margin: auto;
+        filter: drop-shadow(0px 0px 20px #fff);
+    }
+
+    .textCofreActual1 {
+        border-radius: 20px;
+        background-color: rgba(255, 255, 255, 0.781);
+        padding: 10px;
+        box-shadow: 0px 0px 20px rgb(255, 255, 255);
+        font-size: 2rem; font-weight: bold;
+    }
+
+    .textCofreActual {
+        font-size: 2rem; font-weight: bold;
+    }
+
+    #brianx340 {
+        color: white;
+        position: sticky;
+        z-index: -1;
+    }
+
+</style>
+<body>
+    
+    <main id="app">
+        <div id="bg">
+            
+        </div>
+        <div id="brianx340">
+            By BrianX340
+        </div>
+        <div id="menu" class="whmax">
+            <div class="column is-3"></div>
+            <div class="column is-6">
+                <div
+                    class="
+                        seleccion_cofre
+                        whmax
+                        is-flex
+                        is-flex-direction-column
+                        is-justify-content-flex-end
+                        pb-6
+                        ">
+                    <button id="setRotationButton" class="button mb-5">
+                        Se en que cofre estoy
+                    </button>
+                    <button disabled class="button disabled">
+                        Encontrar mi rotacion (Proximamente)
+                    </button>
+                </div>
+            </div>
+            <div class="column is-3"></div>        
+        </div>
+
+        <div id="selectCofreView" class="whmax">
+            <div class="whmax is-flex is-flex-direction-column is is-justify-content-center">
+                
+                <img id="rotacionImg" class="mb-4" src="./ROTACION.jpg" />
+                <div
+                    class="
+                        seleccion_cofre
+                        is-flex
+                        is-flex-direction-column
+                        is-justify-content-center
+                        pb-6
+                        px-5
+                        ">
+                    <input id="inputCofreActual" class="input inCofreActual mb-5" type="number" />
+                    <button id="botonEsteEsMiCofre" class="button">
+                        Este es mi Cofre!!
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="cofreActualView" class="whmax">
+            <div class="whmax is-flex is-flex-direction-column is is-justify-content-flex-end">
+                
+                <div
+                    style="height: 60%;"
+                    class="
+                        is-flex
+                        is-flex-direction-column
+                        is-justify-content-center
+                        pb-6
+                        px-5
+                        ">
+                    <div class="m-auto is-flex is-flex-direction-column">
+                        <img id="COMUN" class="actualCofreImage mb-5" src="./COMUN.png">
+                        <img id="ESPECIAL" class="actualCofreImage mb-5" src="./ESPECIAL.png">
+                        <img id="EPICO" class="actualCofreImage mb-5" src="./EPICO.png">
+                        <span id='textCofreActual1' class="textCofreActual1">Cofre actual: <strong id="cofreContainerNumber" class="textCofreActual">_</strong></span>
+                    </div>
+                    <button id="nextCofre" class="button mt-5 mb-4">
+                        Cofre siguiente
+                    </button>
+                    <button id="prevCofre" class="button mb-4">
+                        Cofre anterior
+                    </button>
+                    <button id="botonEsteNoEsMiCofre" class="button">
+                        Este no es mi cofre!!!
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+<script>
+    NUMERO_COFRE_ACTUAL = 0
+PRIMERA_VEZ = false
+LOCAL_COFRE_KEY = 'cofreActual'
+
+ORDEN_DE_COFRES = {
+    '1': 'COMUN',
+    '2': 'ESPECIAL',
+    '3': 'COMUN',
+    '4': 'COMUN',
+    '5': 'ESPECIAL',
+    '6': 'COMUN',
+    '7': 'COMUN',
+    '8': 'ESPECIAL',
+    '9': 'COMUN',
+    '10': 'ESPECIAL',
+    '11': 'ESPECIAL',
+    '12': 'COMUN',
+    '13': 'EPICO',
+    '14': 'COMUN',
+    '15': 'ESPECIAL',
+    '16': 'COMUN',
+    '17': 'COMUN',
+    '18': 'COMUN',
+    '19': 'ESPECIAL',
+    '20': 'COMUN',
+    '21': 'EPICO',
+    '22': 'COMUN',
+    '23': 'COMUN',
+    '24': 'ESPECIAL',
+    '25': 'COMUN',
+    '26': 'ESPECIAL',
+    '27': 'COMUN',
+    '28': 'COMUN',
+    '29': 'ESPECIAL',
+    '30': 'ESPECIAL',
+    '31': 'COMUN',
+    '32': 'COMUN',
+    '33': 'COMUN',
+    '34': 'EPICO',
+    '35': 'COMUN',
+    '36': 'EPICO',
+    '37': 'ESPECIAL',
+    '38': 'COMUN',
+    '39': 'COMUN',
+    '40': 'ESPECIAL',
+    '41': 'COMUN',
+    '42': 'COMUN',
+    '43': 'COMUN',
+    '44': 'ESPECIAL',
+    '45': 'COMUN',
+    '46': 'ESPECIAL',
+    '47': 'COMUN',
+    '48': 'COMUN',
+    '49': 'COMUN',
+    '50': 'ESPECIAL',
+    '51': 'COMUN',
+    '52': 'EPICO',
+    '53': 'COMUN',
+    '54': 'COMUN',
+    '55': 'COMUN',
+    '56': 'COMUN',
+    '57': 'ESPECIAL',
+    '58': 'COMUN',
+    '59': 'EPICO',
+    '60': 'ESPECIAL'
+  }
+
+  window.onload = () => {
+    function setChestColors(chest) {
+        let color = ""
+        switch (chest) {
+            case "COMUN":
+                color = 'white'
+                return
+
+            case "ESPECIAL":
+                color = 'yellow'
+                return
+            
+            case "EPICO":
+                color = '#5f2d8d'
+                return
+        
+            default:
+                break;
+        }
+        
+        document.getElementById('textCofreActual1').style.color = color
+        document.getElementById('cofreContainerNumber').style.color = color
+    }
+
+    function cofreShowController(number) {
+        if(isNaN(number))
+        {
+            return
+        }
+        setChestColors(ORDEN_DE_COFRES[number])        
+        document.getElementById('COMUN').style.display = 'none'
+        document.getElementById('ESPECIAL').style.display = 'none'
+        document.getElementById('EPICO').style.display = 'none'
+        document.getElementById(ORDEN_DE_COFRES[number]).style.display = 'flex'
+        document.getElementById('cofreContainerNumber').innerText = number
+        localStorage.setItem(LOCAL_COFRE_KEY, number)
+        NUMERO_COFRE_ACTUAL = number
+        PRIMERA_VEZ = false
+    }
+
+    function viewsController(viewToShow) {
+        document.getElementById('menu').style.display = 'none'
+        document.getElementById('selectCofreView').style.display = 'none'
+        document.getElementById('cofreActualView').style.display = 'none'
+
+        document.getElementById('bg').style.display = viewToShow=='selectCofreView' ? 'flex' : 'none'
+        document.getElementById(viewToShow).style.display = 'flex'
+    }
+
+    document.getElementById('setRotationButton').addEventListener('click',(e)=>{
+        document.getElementById('menu').style.display = 'none'
+        viewsController('selectCofreView')
+        //app
+    })
+
+    document.getElementById('botonEsteEsMiCofre').addEventListener('click',(e)=>{
+        miCofre = document.getElementById('inputCofreActual').value
+        cofreShowController(miCofre)
+        viewsController('cofreActualView')
+        document.getElementById('inputCofreActual').value = ''
+    })
+
+    document.getElementById('nextCofre').addEventListener('click',(e)=>{
+        let setNumber = 0 
+        if (NUMERO_COFRE_ACTUAL == Object.values(ORDEN_DE_COFRES).length) {
+            setNumber = 1
+        }
+        else {            
+            setNumber = parseInt(NUMERO_COFRE_ACTUAL) + 1
+        }
+        setChestColors(ORDEN_DE_COFRES[setNumber])
+        cofreShowController(setNumber)
+    })
+
+    document.getElementById('prevCofre').addEventListener('click',(e)=>{
+        let setNumber = 0 
+        if (NUMERO_COFRE_ACTUAL == 1) {
+            setNumber = Object.values(ORDEN_DE_COFRES).length
+        }
+        else {            
+            setNumber = parseInt(NUMERO_COFRE_ACTUAL) - 1
+        }
+        setChestColors(ORDEN_DE_COFRES[setNumber])
+        cofreShowController(setNumber)
+    })
+
+    document.getElementById('botonEsteNoEsMiCofre').addEventListener('click',(e)=>{
+        cofreShowController(1)
+        viewsController('menu')
+        localStorage.removeItem(LOCAL_COFRE_KEY)
+    })
+
+    try {
+        let cofreRecover = localStorage.getItem(LOCAL_COFRE_KEY)
+        PRIMERA_VEZ = cofreRecover==null
+        if(!PRIMERA_VEZ){
+            cofreShowController(cofreRecover)
+            viewsController('cofreActualView')
+        }
+        else{
+            cofreShowController(0)
+            viewsController('menu')
+        }
+    } catch (error) {
+        viewsController('menu')
+    }
+    
+  }
+</script>
+</html>
