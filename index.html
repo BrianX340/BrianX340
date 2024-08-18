@@ -8,6 +8,8 @@
         rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css"
     >
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous"/>
+
 </head>
 <style>
     body {
@@ -87,8 +89,22 @@
 
     #brianx340 {
         color: white;
-        position: sticky;
+        position: absolute;
         z-index: -1;
+        display: flex;
+        width: 100%;
+        justify-content: center;
+    }
+
+    #squadLatam {
+        color: black;
+        position: absolute;
+        top: 20px;
+        z-index: -1;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        padding: 10px;
     }
 
 </style>
@@ -101,9 +117,15 @@
         <div id="brianx340">
             By BrianX340
         </div>
+
+        <div id="squadLatam">
+            <a href="https://www.facebook.com/groups/590372652204117" class="button">
+                Unete a <i class="fab fa-facebook-square ml-2 mr-1"></i> <strong style="font-weight: bold;" >Squad Busters LATAM</strong>
+            </a>
+        </div>
         <div id="menu" class="whmax">
-            <div class="column is-3"></div>
-            <div class="column is-6">
+            <div class="column"></div>
+            <div class="column">
                 <div
                     class="
                         seleccion_cofre
@@ -116,12 +138,12 @@
                     <button id="setRotationButton" class="button mb-5">
                         Se en que cofre estoy
                     </button>
-                    <button disabled class="button disabled">
+                    <button disabled class="button disabled mb-5">
                         Encontrar mi rotacion (Proximamente)
                     </button>
                 </div>
             </div>
-            <div class="column is-3"></div>        
+            <div class="column"></div>        
         </div>
 
         <div id="selectCofreView" class="whmax">
@@ -248,25 +270,38 @@ ORDEN_DE_COFRES = {
   window.onload = () => {
     function setChestColors(chest) {
         let color = ""
+        let textShadow = "unset"
+        let bg = '#ffffffc7'
         switch (chest) {
             case "COMUN":
-                color = 'white'
-                return
+                color = '#434141'
+                textShadow = 'unset'
+                break
 
             case "ESPECIAL":
                 color = 'yellow'
-                return
+                textShadow = '0px 0px 7px BLACK'
+                break
             
             case "EPICO":
-                color = '#5f2d8d'
-                return
+                color = '#bd76ff'
+                textShadow = '0px 0px 7px #0069ff'
+                bg = '#000000c7'
+                break
         
             default:
                 break;
         }
+        console.log(color);
+        
         
         document.getElementById('textCofreActual1').style.color = color
         document.getElementById('cofreContainerNumber').style.color = color
+
+        document.getElementById('textCofreActual1').style.textShadow = textShadow
+        document.getElementById('cofreContainerNumber').style.textShadow = textShadow
+
+        document.getElementById('textCofreActual1').style.backgroundColor = bg
     }
 
     function cofreShowController(number) {
